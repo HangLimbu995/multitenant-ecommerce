@@ -14,6 +14,10 @@ import { Categories } from "./collections/Categories";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+if (!process.env.DATABASE_URI) {
+  throw new Error('DATABASE_URI environment variable is required');
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -28,7 +32,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
+    url: process.env.DATABASE_URI!,
   }),
   sharp,
   plugins: [
