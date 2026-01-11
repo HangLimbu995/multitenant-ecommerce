@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "tsx node_modules/payload/dist/bin/index.js generate:types",
-    "db:fresh": "tsx node_modules/payload/dist/bin/index.js migrate:fresh"
+    "db:fresh": "tsx node_modules/payload/dist/bin/index.js migrate:fresh",
+    "db:seed": "bun run src/seed.tsx",
+    "db:reset": "bun run db:fresh && bun run db:seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -16,6 +18,7 @@
     "@payloadcms/next": "3.70.0",
     "@payloadcms/payload-cloud": "3.70.0",
     "@payloadcms/richtext-lexical": "3.70.0",
+    "@payloadcms/ui": "3.70.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.8",
