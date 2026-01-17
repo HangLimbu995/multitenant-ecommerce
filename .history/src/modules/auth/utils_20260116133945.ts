@@ -1,0 +1,1 @@
+import {cookie as getCookie} from 'headers/'
