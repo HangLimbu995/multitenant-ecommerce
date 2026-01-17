@@ -1,0 +1,13 @@
+import { SignInView } from '@/modules/auth/ui/views/sign-in-view'
+import React from 'react'
+import {caller} from '@/trpc/server'
+
+const Page = () => {
+  const session = await caller
+  
+  return (
+<SignInView />
+  )
+}
+
+export default Page
