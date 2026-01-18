@@ -23,7 +23,7 @@ interface Props {
 
 export const Categories = ({ data }: Props) => {
   const params = useParams()
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -74,8 +74,8 @@ export const Categories = ({ data }: Props) => {
   return (
     <div className="relative w-full">
       {/* Categories sidebar */}
-      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setisSidebarOpen}/>
-      
+      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setisSidebarOpen} />
+
       {/* Hidden div to measure all items */}
       <div
         ref={measureRef}
@@ -100,6 +100,8 @@ export const Categories = ({ data }: Props) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
+        {/* TODO: Hardcode "ALL" button */}
+
         {data.slice(0, visibleCount).map((category: CategoriesGetManyOutputSingle) => (
           <div key={category.id}>
             <CategoryDropdown
@@ -112,12 +114,12 @@ export const Categories = ({ data }: Props) => {
 
         <div ref={viewAllRef} className="shrink-0">
           <Button
-          variant='elevated'
+            variant='elevated'
             className={cn(
               "h-11 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
               isActiveCategoryHidden &&
-                !isAnyHovered &&
-                "bg-white border-primary"
+              !isAnyHovered &&
+              "bg-white border-primary"
             )}
             onClick={() => setisSidebarOpen(true)}
           >

@@ -2,6 +2,7 @@
 
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -107,7 +108,7 @@ export default function Home() {
       {!data?.user && (
         <div className="mt-4 p-4 bg-yellow-100 rounded">
           <p className="font-semibold">Not logged in</p>
-          <a href="/sign-in" className="text-blue-500 underline">Go to sign in page</a>
+          <Link href="/sign-in" className="text-blue-500 underline">Go to sign in page</Link>
         </div>
       )}
     </div>
