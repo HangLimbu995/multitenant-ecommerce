@@ -5,6 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect } from "react";
 
+/**
+ * Render the client-side Home page showing authentication session and debug information.
+ *
+ * Renders loading, error, and success states for the auth session query; displays a user key/value table and raw JSON, shows cookie and debug info, and includes a link to the sign-in page when not authenticated. Also logs session data, errors, and document.cookie to the console for debugging.
+ *
+ * @returns The rendered React element for the Home page.
+ */
 export default function Home() {
   const trpc = useTRPC();
   const { data, isLoading, error, refetch } = useQuery(trpc.auth.session.queryOptions());
