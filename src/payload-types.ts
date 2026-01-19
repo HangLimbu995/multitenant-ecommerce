@@ -14,7 +14,8 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
-    products: Product; // Added products here
+    products: Product;
+    tags: Tag;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -105,8 +106,20 @@ export interface Product {
   description?: string;
   price: number;
   category?: string | Category | null;
+  tags?: (string | Tag)[] | null;
   image?: string | Media | null;
   refundPolicy?: "30-day" | "14-day" | "7-day" | "3-day" | "1-day" | "no-refunds";
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  name: string;
+  products?: (string | Product)[] | null;
   updatedAt: string;
   createdAt: string;
 }

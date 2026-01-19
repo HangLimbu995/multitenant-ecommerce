@@ -11,13 +11,9 @@ export default function Home() {
 
   // Debug: Log cookies and session data
   useEffect(() => {
-    console.log("Session data:", data);
-    console.log("Session error:", error);
-    console.log("Cookies:", document.cookie);
 
     // Check if cookie exists
     const cookieExists = document.cookie.includes('payload-token');
-    console.log("Auth cookie exists:", cookieExists);
   }, [data, error]);
 
   if (isLoading) {

@@ -3,20 +3,37 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { useTRPC } from '@/trpc/client'
+import { useProductFilters } from '../../hooks/use-product-filters'
 
 interface Props {
     category?: string
 }
 
 export const ProductList = ({ category }: Props) => {
-    const trpc = useTRPC()
+    const [filters] = useProductFilters()
 
-    const { data } = useSuspenseQuery(trpc.products.getMany.queryOptions({ category }))
+    const trpc = useTRPC()
+    const { data } = useSuspenseQuery(trpc.products.getMany.queryOptions({ category, ...filters }))
 
     return (
         <div>
-            {JSON.stringify(data, null, 2)}
-        </div>
+        {
+        (!data?.docs || data.docs.length === 0) ? (
+            <div className="text-center col-span-full py-10 text-gray-500">
+                Didn&apos;t find any products with your filter.
+            </div>
+        ) : (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>
+                {data.docs.map((product) => (
+                    <div key={product.id} className='border rounded-md bg-white p-4'>
+                        <h2 className='text-xl font-medium'>{product.name}</h2>
+                        <p>${product.price}</p>
+                    </div>
+                ))}
+                </div>
+        )
+        }
+    </div>
     )
 }
 
