@@ -48,6 +48,7 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
                 data?.pages.map((page) => page.docs.map((tag) => {
                     const checkboxId = `tag-${tag.id}`;
                     return (
+
                         <label key={tag.id} htmlFor={checkboxId} className="flex items-center justify-between cursor-pointer">
                             <span className="font-medium">{tag.name}</span>
                             <Checkbox id={checkboxId} checked={value?.includes(tag.name)}

@@ -8,7 +8,7 @@ const params = {
         .withOptions({
             clearOnDefault: true,
         }).withDefault(''),
-    maxPrice: parseAsString
+    MaxPrice: parseAsString
         .withOptions({
             clearOnDefault: true,
         }).withDefault(''),

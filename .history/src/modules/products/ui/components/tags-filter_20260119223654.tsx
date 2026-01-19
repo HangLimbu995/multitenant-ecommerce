@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DEFAULT_LIMIT } from "@/constants";
 import { useTRPC } from "@/trpc/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { ta } from "date-fns/locale";
+import { checkbox } from "payload/shared";
 
 
 interface TagsFilterProps {
@@ -46,13 +46,20 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
                 </div>
             ) : (
                 data?.pages.map((page) => page.docs.map((tag) => {
-                    const checkboxId = `tag-${tag.id}`;
+                    const checkboxId = `tag-${tag - id}`;
                     return (
+
                         <label key={tag.id} htmlFor={checkboxId} className="flex items-center justify-between cursor-pointer">
                             <span className="font-medium">{tag.name}</span>
-                            <Checkbox id={checkboxId} checked={value?.includes(tag.name)}
-                                onCheckedChange={() => onClick(tag.name)} />
+                            <Checkbox id={checkbox}
                         </label>
+                        // <div key={tag.id} className="flex items-center justify-between cursor-pointer"
+                        //     onClick={() => onClick(tag.name)}
+                        // >
+                        //     <p className="font-medium">{tag.name}</p>
+                        //     <Checkbox checked={value?.includes(tag.name)}
+                        //         onCheckedChange={() => onClick(tag.name)} />
+                        // </div>
                     )
                 }))
             )}

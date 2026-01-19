@@ -22,11 +22,11 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
         <div className={cn(
             "p-4 border-b flex flex-col gap-2", className
         )}>
-            <button onClick={() => setIsOpen((current) => !current)}
+            <div onClick={() => setIsOpen((current) => !current)}
                 className="flex items-center justify-between cursor-pointer">
                 <p className="font-medium">{title}</p>
                 <Icon className="size-5" />
-            </button>
+            </div>
             {isOpen && children}
         </div>
     )
