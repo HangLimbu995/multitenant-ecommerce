@@ -22,7 +22,7 @@ export const SubcategoryMenu = ({ category, isOpen }: Props) => {
       className="absolute z-100"
       style={{ top: '100%', left: 0 }}
     >
-      {/* Invisible bridge to maintain hover */}
+      {/* Invisible brdige to maintain hover */}
       <div className="h-3 w-60" />
       <div
         style={{ backgroundColor }}
@@ -33,7 +33,7 @@ export const SubcategoryMenu = ({ category, isOpen }: Props) => {
             <Link
               key={subcategory.slug}
               href={`/${category.slug}/${subcategory.slug}`}
-              className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-medium"
+              className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-mediu"
             >
               {subcategory.name}
             </Link>

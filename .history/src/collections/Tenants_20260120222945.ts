@@ -42,7 +42,7 @@ export const Tenants: CollectionConfig = {
             type: 'checkbox',
             admin: {
                 readOnly: true,
-                description: "You cannot create products until you submit your Stripe details"
+                description: "You cannot create products until you submit your Strip details"
             }
         }
     ]

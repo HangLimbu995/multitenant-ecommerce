@@ -7,7 +7,7 @@ import { SearchParams } from "nuqs/server";
 import { getQueryClient, trpc } from "@/trpc/server";
 
 import { loadProductFilters } from "@/modules/products/search-params";
-import {  ProductListSkeleton } from "@/modules/products/ui/components/product-list";
+import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
 
 import { DEFAULT_LIMIT } from "@/constants";
 import ProductListView from "@/modules/products/ui/views/product-list-view";

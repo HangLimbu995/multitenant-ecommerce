@@ -22,7 +22,7 @@ export const SubcategoryMenu = ({ category, isOpen }: Props) => {
       className="absolute z-100"
       style={{ top: '100%', left: 0 }}
     >
-      {/* Invisible bridge to maintain hover */}
+      {/* Invisible brdige to maintain hover */}
       <div className="h-3 w-60" />
       <div
         style={{ backgroundColor }}

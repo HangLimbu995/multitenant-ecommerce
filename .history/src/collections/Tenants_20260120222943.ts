@@ -38,11 +38,11 @@ export const Tenants: CollectionConfig = {
             }
         },
         {
-            name: 'stripeDetailsSubmitted',
+            name: 'stripDetailsSubmitted',
             type: 'checkbox',
             admin: {
                 readOnly: true,
-                description: "You cannot create products until you submit your Stripe details"
+                description: "You cannot create products until you submit your Strip details"
             }
         }
     ]

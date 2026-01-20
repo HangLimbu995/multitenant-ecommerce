@@ -8,7 +8,6 @@ import { loadProductFilters } from '@/modules/products/search-params';
 import ProductListView from '@/modules/products/ui/views/product-list-view';
 import { DEFAULT_LIMIT } from '@/constants';
 import { Suspense } from 'react';
-import { ProductListSkeleton } from '@/modules/products/ui/components/product-list';
 
 
 interface Props {
