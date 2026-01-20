@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { Category } from "./payload-types";
 
 const categories = [
   {
@@ -140,6 +141,59 @@ const categories = [
 const seed = async () => {
   const payload = await getPayload({ config });
 
+  // Create admin tenant
+  const adminTenant = await payload.create({
+    collection: "tenants",
+    data: {
+      name: "admin",
+      slug: "admin",
+      stripAccountId: "admin"
+    }
+  })
+
+  // Create admin user
+  const { docs: users } = await payload.find({
+    collection: 'users',
+    where: {
+      email: {
+        equals: 'admin@demo.com',
+      },
+    },
+  });
+
+  if (users.length === 0) {
+    await payload.create({
+      collection: 'users',
+      data: {
+        email: 'admin@demo.com',
+        password: 'demo',
+        roles: ['super-admin'],
+        username: 'admin',
+        tenants: [
+          {
+            tenant: adminTenant.id
+          }
+        ]
+      },
+    });
+  } else {
+    await payload.update({
+      collection: 'users',
+      id: users[0]!.id,
+      data: {
+        email: 'admin@demo.com',
+        password: 'demo',
+        roles: ['super-admin'],
+        username: 'admin',
+        tenants: [
+          {
+            tenant: adminTenant.id
+          }
+        ]
+      },
+    });
+  }
+
   for (const category of categories) {
     let parentCategory;
     try {
@@ -170,9 +224,10 @@ const seed = async () => {
         });
 
         if (existingCategory.docs.length > 0) {
+          const foundCategory = existingCategory?.docs[0] as Category;
           parentCategory = await payload.update({
             collection: "categories",
-            id: existingCategory.docs[0].id,
+            id: foundCategory.id,
             data: {
               name: category.name,
               color: category.color,
@@ -195,7 +250,7 @@ const seed = async () => {
           data: {
             name: subcategory.name,
             slug: subcategory.slug,
-            parent: parentCategory.id,
+            parent: parentCategory?.id,
           },
         });
       } catch (error) {
@@ -214,13 +269,15 @@ const seed = async () => {
             limit: 1,
           });
 
+
           if (existingSubcategory.docs.length > 0) {
+            const foundSubcategory = existingSubcategory?.docs[0] as Category;
             await payload.update({
               collection: "categories",
-              id: existingSubcategory.docs[0].id,
+              id: foundSubcategory.id,
               data: {
                 name: subcategory.name,
-                parent: parentCategory.id,
+                parent: parentCategory?.id,
               },
             });
           }

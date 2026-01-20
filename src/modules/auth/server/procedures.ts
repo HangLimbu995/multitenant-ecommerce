@@ -4,6 +4,11 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { loginSchema, registerSchema } from "../schemas";
 import { generateAuthCookie } from "../utils";
+import { User } from "@/payload-types";
+
+interface UserCreateData extends Omit<User, 'id' | 'createdAt' | 'updatedAt'> {
+  tenants: Array<{ tenant: string }>;
+}
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -12,7 +17,7 @@ export const authRouter = createTRPCRouter({
     const session = await ctx.db.auth({ headers });
     return session;
   }),
-   
+
   register: baseProcedure
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
@@ -34,14 +39,30 @@ export const authRouter = createTRPCRouter({
           message: "Username already taken!",
         });
       }
+ 
+      const tenant = await ctx.db.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          slug: input.username,
+          stripAccountId: 'test'
+        }
+      })
 
       await ctx.db.create({
         collection: "users",
-        data: {
+        draft: true,
+        data: ( {
           email: input.email,
           username: input.username,
           password: input.password, //This will be hashed
-        },
+          tenants: [
+            {
+              tenant: tenant.id,
+            }
+          ]
+        } as UserCreateData ),
+
       });
 
       const data = await ctx.db.login({

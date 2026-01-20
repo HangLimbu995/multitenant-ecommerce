@@ -16,6 +16,7 @@ export interface Config {
     categories: Category;
     products: Product;
     tags: Tag;
+    tenants: Tenant;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -56,7 +57,12 @@ export interface User {
   createdAt: string;
   email: string;
   username: string;
+  roles: ("super-admin" | "user")[];
   resetPasswordToken?: string | null;
+  tenants?: {
+    tenant: string | Tenant;
+    id?: string | null;
+  }[];
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
@@ -120,6 +126,20 @@ export interface Tag {
   id: string;
   name: string;
   products?: (string | Product)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  name: string;
+  slug: string;
+  image?: string | Media | null;
+  stripAccountId: string;
+  stripDetailsSubmitted?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
