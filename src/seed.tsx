@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { Category } from "./payload-types";
+import { Category, Tenant } from "./payload-types";
 
 const categories = [
   {
@@ -142,14 +142,50 @@ const seed = async () => {
   const payload = await getPayload({ config });
 
   // Create admin tenant
-  const adminTenant = await payload.create({
-    collection: "tenants",
-    data: {
-      name: "admin",
-      slug: "admin",
-      stripAccountId: "admin"
+let adminTenant;
+  try {
+    adminTenant = await payload.create({
+      collection: "tenants",
+      data: {
+        name: "admin",
+        slug: "admin",
+        stripeAccountId: "admin",
+        stripDetailsSubmitted: false,
+      },
+    });
+  } catch (error) {
+    if (
+      (error && typeof error === "object" && "status" in error && error.status === 400) ||
+      (error && typeof error === "object" && "name" in error && error.name === "ValidationError")
+    ) {
+      const existingTenant = await payload.find({
+        collection: "tenants",
+        where: {
+          slug: {
+            equals: "admin",
+          },
+        },
+        limit: 1,
+      });
+
+      if (existingTenant.docs.length > 0) {
+        const foundTenant = existingTenant?.docs[0] as Tenant;
+        adminTenant = await payload.update({
+          collection: "tenants",
+          id: foundTenant.id,
+          data: {
+            name: "admin",
+            stripeAccountId: "admin",
+            stripDetailsSubmitted: false,
+          },
+        });
+      } else {
+        throw error;
+      }
+    } else {
+      throw error;
     }
-  })
+  }
 
   // Create admin user
   const { docs: users } = await payload.find({

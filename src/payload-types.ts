@@ -115,6 +115,7 @@ export interface Product {
   tags?: (string | Tag)[] | null;
   image?: string | Media | null;
   refundPolicy?: "30-day" | "14-day" | "7-day" | "3-day" | "1-day" | "no-refunds";
+  tenant?: string | Tenant | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -138,7 +139,7 @@ export interface Tenant {
   name: string;
   slug: string;
   image?: string | Media | null;
-  stripAccountId: string;
+  stripeAccountId: string;
   stripDetailsSubmitted?: boolean | null;
   updatedAt: string;
   createdAt: string;
