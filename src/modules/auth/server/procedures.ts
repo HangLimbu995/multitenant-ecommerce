@@ -34,7 +34,7 @@ export const authRouter = createTRPCRouter({
       const existingUser = existingData.docs[0];
 
       if (existingUser) {
-        return new TRPCError({
+        throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Username already taken!",
         });
@@ -45,7 +45,7 @@ export const authRouter = createTRPCRouter({
         data: {
           name: input.username,
           slug: input.username,
-          stripAccountId: 'test'
+          stripeAccountId: 'test'
         }
       })
 
@@ -73,7 +73,7 @@ export const authRouter = createTRPCRouter({
         },
       });
       if (!data.token) {
-        return new TRPCError({
+        throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Failed to login!",
         });

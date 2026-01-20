@@ -140,7 +140,7 @@ export interface Tenant {
   slug: string;
   image?: string | Media | null;
   stripeAccountId: string;
-  stripeDetailsSubmitted?: boolean | null;
+  stripDetailsSubmitted?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }

@@ -30,19 +30,20 @@ export const Tenants: CollectionConfig = {
             relationTo: 'media'
         },
         {
-            name: 'stripAccountId',
+            name: 'stripeAccountId',
             type: 'text',
             required: true,
+            defaultValue: '',
             admin: {
                 readOnly: true,
             }
         },
         {
-            name: 'stripDetailsSubmitted',
+            name: 'stripeDetailsSubmitted',
             type: 'checkbox',
             admin: {
                 readOnly: true,
-                description: "You cannot create products until you submit your Strip details"
+                description: "You cannot create products until you submit your Stripe details"
             }
         }
     ]

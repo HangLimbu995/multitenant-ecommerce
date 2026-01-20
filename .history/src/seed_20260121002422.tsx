@@ -150,7 +150,7 @@ let adminTenant;
         name: "admin",
         slug: "admin",
         stripeAccountId: "admin",
-        stripeDetailsSubmitted: false,
+        stripDetailsSubmitted: false,
       },
     });
   } catch (error) {
@@ -176,7 +176,7 @@ let adminTenant;
           data: {
             name: "admin",
             stripeAccountId: "admin",
-            stripeDetailsSubmitted: false,
+            stripDetailsSubmitted: false,
           },
         });
       } else {

@@ -1,13 +1,15 @@
+import { generateTenantURL } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
     id: string;
     name: string;
     imageUrl?: string | null;
-    authorUsername: string;
-    authorImageUrl?: string | null;
+    tenantSlug: string;
+    tenantImageUrl?: string | null;
     reviewRating: number;
     reviewCount: number;
     price: number;
@@ -16,12 +18,21 @@ interface ProductCardProps {
 export const ProductCard = ({
     id,
     name, imageUrl,
-    authorUsername,
-    authorImageUrl,
+    tenantSlug,
+    tenantImageUrl,
     reviewRating,
     reviewCount,
     price
 }: ProductCardProps) => {
+    const router = useRouter()
+
+    const handleUserClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        router.push(generateTenantURL(tenantSlug))
+    }
+
     return (
         <Link href={`/products/${id}`} >
             <div className="hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">
@@ -31,17 +42,16 @@ export const ProductCard = ({
                 </div>
                 <div className="p-4 border-y flex flex-col gap-3 flex-1">
                     <h2 className="text-lg font-medium line-clamp-4 ">{name}</h2>
-                    {/* TODO: Redirect to user shop */}
-                    <div className="flex items-center gap-2" onClick={() => { }}>
-                        {authorImageUrl && (
-                            <Image alt={authorUsername}
-                                src={authorImageUrl}
+                    <div className="flex items-center gap-2" onClick={handleUserClick}>
+                        {tenantImageUrl && (
+                            <Image alt={tenantSlug}
+                                src={tenantImageUrl}
                                 width={16}
                                 height={16}
                                 className="rounded-full border shrink-0 size-[16px]"
                             />
                         )}
-                        <p className="text-sm underline font-medium">{authorUsername}</p>
+                        <p className="text-sm underline font-medium">{tenantSlug}</p>
                     </div>
                     {reviewCount > 0 && (
                         <div className="flex items-center gap-1">
@@ -71,23 +81,23 @@ export const ProductCard = ({
 
 export const ProductCardSkeleton = () => {
     return (
-    <div className="border rounded-md bg-white overflow-hidden h-full flex flex-col animate-pulse">
-        <div className="relative aspect-square bg-gray-200" />
-        <div className="p-4 border-y flex flex-col gap-3 flex-1">
-            <div className="h-6 bg-gray-200 rounded w-3/4" />
-            <div className="flex items-center gap-2">
-                <div className="rounded-full border shrink-0 size-[16px] bg-gray-200" />
-                <div className="h-4 bg-gray-200 rounded w-24" />
+        <div className="border rounded-md bg-white overflow-hidden h-full flex flex-col animate-pulse">
+            <div className="relative aspect-square bg-gray-200" />
+            <div className="p-4 border-y flex flex-col gap-3 flex-1">
+                <div className="h-6 bg-gray-200 rounded w-3/4" />
+                <div className="flex items-center gap-2">
+                    <div className="rounded-full border shrink-0 size-[16px] bg-gray-200" />
+                    <div className="h-4 bg-gray-200 rounded w-24" />
+                </div>
+                <div className="flex items-center gap-1">
+                    <div className="size-3.5 bg-gray-200 rounded" />
+                    <div className="h-4 bg-gray-200 rounded w-16" />
+                </div>
             </div>
-            <div className="flex items-center gap-1">
-                <div className="size-3.5 bg-gray-200 rounded" />
-                <div className="h-4 bg-gray-200 rounded w-16" />
+            <div className="p-4">
+                <div className="relative px-2 py-1 border bg-pink-200 w-16 h-6 rounded" />
             </div>
         </div>
-        <div className="p-4">
-            <div className="relative px-2 py-1 border bg-pink-200 w-16 h-6 rounded" />
-        </div>
-    </div>
 
     )
 }

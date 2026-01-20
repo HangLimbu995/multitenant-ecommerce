@@ -1,4 +1,3 @@
-import { MultiTenantPluginConfig } from './../node_modules/@payloadcms/plugin-multi-tenant/dist/types.d';
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
