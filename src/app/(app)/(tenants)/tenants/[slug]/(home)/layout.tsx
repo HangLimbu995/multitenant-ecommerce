@@ -13,7 +13,7 @@ const Layout = async ({ children, params }: LayoutProps) => {
     const { slug } = await params;
 
     const queryclient = getQueryClient()
-    void queryclient.prefetchQuery(trpc.tenants.getOne.queryOptions({
+    await queryclient.prefetchQuery(trpc.tenants.getOne.queryOptions({
         slug,
     }))
 

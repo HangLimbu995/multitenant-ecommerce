@@ -26,7 +26,7 @@ export const Navbar = ({ slug }: Props) => {
                             alt={slug}
                         />
                     )}
-                    <p className="text-xl">{data?.name}</p>
+                    <p className="text-xl">{data.name}</p>
                 </Link>
             </div>
         </nav>

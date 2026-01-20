@@ -17,7 +17,7 @@ export const Navbar = ({ slug }: Props) => {
         <nav className="h-20 border-b font-medium bg-white">
             <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
                 <Link href={generateTenantURL(slug)} className="flex items-center gap-2">
-                    {data && data.image?.url && (
+                    {data && !('code' in data) && data.image?.url && (
                         <Image
                             src={data.image.url}
                             width={32}
@@ -26,7 +26,7 @@ export const Navbar = ({ slug }: Props) => {
                             alt={slug}
                         />
                     )}
-                    <p className="text-xl">{data?.name}</p>
+                    <p className="text-xl">{data.name}</p>
                 </Link>
             </div>
         </nav>
