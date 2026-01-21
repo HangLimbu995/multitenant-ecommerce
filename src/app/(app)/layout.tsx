@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+
+export const dynamic = 'force-dynamic';
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
