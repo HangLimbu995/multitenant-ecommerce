@@ -29,7 +29,7 @@ export const productsRouter = createTRPCRouter({
         depth: 2, // Load the "product.image", "product.teneant", & "product.tenant.image"
       })
 
-      if (!product)
+      if (!product.docs[0])
         throw new TRPCError({
           code: 'NOT_FOUND', message: 'Product not found'
         })

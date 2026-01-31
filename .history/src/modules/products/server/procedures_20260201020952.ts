@@ -6,7 +6,6 @@ import { Sort, Where } from 'payload';
 import { Category, Media, Tenant } from '@/payload-types';
 import { sortValues } from '../search-params';
 import { DEFAULT_LIMIT } from '@/constants';
-import { TRPCError } from '@trpc/server';
 
 
 type CategoryWithSubcategories = Category & {
@@ -29,10 +28,7 @@ export const productsRouter = createTRPCRouter({
         depth: 2, // Load the "product.image", "product.teneant", & "product.tenant.image"
       })
 
-      if (!product)
-        throw new TRPCError({
-          code: 'NOT_FOUND', message: 'Product not found'
-        })
+      i
 
       return {
         ...product,
