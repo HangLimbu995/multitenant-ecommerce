@@ -156,7 +156,7 @@ export const Navbar = () => {
             className="border border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg"
           >
             <Link prefetch href="/sign-in">
-              Login in
+              Log in
             </Link>
           </Button>
           <Button

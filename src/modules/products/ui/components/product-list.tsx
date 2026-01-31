@@ -37,6 +37,8 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
         }
     ))
 
+
+
     return (
         <div>
             {
