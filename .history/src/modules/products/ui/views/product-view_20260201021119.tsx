@@ -44,7 +44,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                         </div>
                         <div className="border-y flex">
                             <div className="px-6 py-4 flex items-center justify-center border-r">
-                                <div className="relative px-2 py-1 border bg-pink-400 w-fit">
+                                <div className="telative px-2 py-1 border bg-pink-400 w-fit">
                                     <p className="text-base font-medium">{formatCurrency(data.price)}</p>
                                 </div>
                             </div>
@@ -71,8 +71,8 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                             </div>
                         </div>
 
-                        <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
-                            <div className="flex items-center gap-1">
+                        <div className="block lg:hidden px-6 py-4 items-center justify=center border-b">
+                            <div className="felx items-center gap-1">
                                 <StarRating rating={4}
                                     iconClassName="size-4"
                                 />
@@ -132,7 +132,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     <Fragment key={stars}>
                                         <div className="font-medium">{stars} {stars === 1 ? 'star' : 'stars'}</div>
                                         <Progress value={25}
-                                        className="h-[lh]" />
+                                        className="h-lh" />
                                         <div className="font-medium">{25}%</div>
                                     </Fragment>
                                 ))}

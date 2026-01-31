@@ -132,7 +132,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     <Fragment key={stars}>
                                         <div className="font-medium">{stars} {stars === 1 ? 'star' : 'stars'}</div>
                                         <Progress value={25}
-                                        className="h-[lh]" />
+                                        className="h-lh" />
                                         <div className="font-medium">{25}%</div>
                                     </Fragment>
                                 ))}

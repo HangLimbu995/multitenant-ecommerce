@@ -36,7 +36,7 @@ export const ProductCard = ({
         router.push(generateTenantURL(tenantSlug))
     }
 
-    // http://localhost:3000/teannts/[tenantName]/prdoucts/[productId]
+    // http://locahost:3000/teannts/[tenantName]/prdoucts/[productId]
 
     return (
         <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`} >
