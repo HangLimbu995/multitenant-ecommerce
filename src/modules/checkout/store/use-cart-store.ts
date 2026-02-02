@@ -65,9 +65,9 @@ export const useCartStore = create<CartState>()(
 
             }),
         clearAllCarts: () =>
-        ({
-            tenantCarts: {}
-        }),
+            set(() => ({
+                tenantCarts: {}
+            })),
 
     })
         , {
