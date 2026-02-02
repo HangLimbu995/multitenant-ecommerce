@@ -17,7 +17,7 @@
     "@payloadcms/db-mongodb": "3.70.0",
     "@payloadcms/next": "3.70.0",
     "@payloadcms/payload-cloud": "3.70.0",
-    "@payloadcms/plugin-cloud-storage": "^3.70.0",
+    "@payloadcms/plugin-cloud-storage": "3.70.0",
     "@payloadcms/plugin-multi-tenant": "3.70.0",
     "@payloadcms/richtext-lexical": "3.70.0",
     "@payloadcms/ui": "3.70.0",
@@ -75,7 +75,8 @@
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
-    "zod": "^4.3.5"
+    "zod": "^4.3.5",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
