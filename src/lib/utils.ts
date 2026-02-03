@@ -1,4 +1,3 @@
-import { formatAsCurrency } from './../modules/products/ui/components/price-filter';
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 

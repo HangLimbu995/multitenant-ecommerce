@@ -13,6 +13,7 @@ export const appRouter = createTRPCRouter({
   tags: tagsRouter,
   tenants: tenantsRouter,
   checkout: checkoutRouter,
+  
 });
 
 // export type definition of API

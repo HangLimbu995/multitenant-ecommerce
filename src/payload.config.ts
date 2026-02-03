@@ -8,13 +8,14 @@ import { fileURLToPath } from "url";
 import sharp from "sharp";
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant'
 
-import { Users } from "./collections/Users";
-import { Media } from "./collections/Media";
-import { Categories } from "./collections/Categories";
-import { Products } from "./collections/Products";
-import { Tags } from "./collections/Tags";
-import { Tenants } from "./collections/Tenants";
-import { Config } from "./payload-types";
+import { Users } from "./collections/Users.ts";
+import { Media } from "./collections/Media.ts";
+import { Categories } from "./collections/Categories.ts";
+import { Products } from "./collections/Products.ts";
+import { Tags } from "./collections/Tags.ts";
+import { Tenants } from "./collections/Tenants.ts";
+import type { Config } from "./payload-types.ts";
+import { Orders } from "./collections/Orders.ts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,7 +31,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Products, Tags, Tenants],
+  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
