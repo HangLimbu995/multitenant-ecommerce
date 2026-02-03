@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
         try {
             switch (event.type) {
-                case "checkout.session.completed": {
+                case "checkout.session.completed":{
                     data = event.data.object as Stripe.Checkout.Session;
 
                     if (!data.metadata?.userId) {
@@ -75,22 +75,6 @@ export async function POST(req: Request) {
                     const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
 
                     for (const item of lineItems) {
-                        const existingOrder = await payload.find({
-                            collection: 'orders',
-                            where: {
-                                stripeCheckoutSessionId: {
-                                    equals: data.id
-                                },
-                                product: { equals: item.price.product.metadata.id }
-                            },
-                            limit: 1,
-                        })
-
-                        if (existingOrder.docs.length > 0) {
-                            console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id}`)
-                            continue;
-                        }
-                        
                         await payload.create({
                             collection: "orders",
                             data: {

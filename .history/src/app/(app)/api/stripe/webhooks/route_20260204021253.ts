@@ -90,7 +90,6 @@ export async function POST(req: Request) {
                             console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id}`)
                             continue;
                         }
-                        
                         await payload.create({
                             collection: "orders",
                             data: {
