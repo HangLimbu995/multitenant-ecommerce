@@ -53,6 +53,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     }, [redirectUrl])
 
     useEffect(() => {
+        // localhost:3000/tenants/admin/checkout?success=true
         if (states.success) {
             setStates({ success: false, cancel: false })
             clearCart();

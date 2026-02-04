@@ -1,6 +1,9 @@
 
+'use client'
+
+import { useCallback } from "react";
 import { useCartStore } from "../store/use-cart-store";
-import {useShallow} from 'zustand/react/shallow'
+import { useShallow } from 'zustand/react/shallow'
 
 const EMPTY_ARRAY: string[] = []
 
@@ -19,26 +22,34 @@ export const useCart = (tenantSlug: string) => {
         clearAllCarts: state.clearAllCarts
     }))
     )
-    const toggleProduct = (productId: string) => {
+    const toggleProduct = useCallback((productId: string) => {
         if (productIds.includes(productId)) {
             removeProduct(tenantSlug, productId)
         } else {
             addProduct(tenantSlug, productId)
         }
-    }
+    }, [addProduct, removeProduct, productIds, tenantSlug])
 
     const isProductInCart = (productId: string) => {
         return productIds.includes(productId)
     }
 
-    const clearTenantCart = () => {
+    const clearTenantCart = useCallback(() => {
         clearCart(tenantSlug)
-    }
+    }, [tenantSlug, clearCart])
+
+    const handleAddProduct = useCallback((productId: string) => {
+        addProduct(tenantSlug, productId)
+    }, [addProduct, tenantSlug])
+
+    const handleRemoveProduct = useCallback((productId: string) => {
+        removeProduct(tenantSlug, productId)
+    }, [removeProduct, tenantSlug])
 
     return {
         productIds,
-        addProduct: (productId: string) => addProduct(tenantSlug, productId),
-        removeProduct: (productId: string) => removeProduct(tenantSlug, productId),
+        addProduct: handleAddProduct,
+        removeProduct: handleRemoveProduct,
         clearCart: clearTenantCart,
         clearAllCarts,
         toggleProduct,

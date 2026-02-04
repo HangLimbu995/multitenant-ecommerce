@@ -43,7 +43,8 @@ export async function POST(req: Request) {
 
         try {
             switch (event.type) {
-                case "checkout.session.completed": {
+                case "checkout.session.completed":
+                    {
                     data = event.data.object as Stripe.Checkout.Session;
 
                     if (!data.metadata?.userId) {
@@ -90,7 +91,7 @@ export async function POST(req: Request) {
                             console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id}`)
                             continue;
                         }
-                        
+
                         await payload.create({
                             collection: "orders",
                             data: {
@@ -100,9 +101,9 @@ export async function POST(req: Request) {
                                 name: item.price.product.name,
                             }
                         })
+                        }
+                        break;
                     }
-                    break;
-                }
                 default:
                     throw new Error(`Unhandled event: ${event.type}`)
             }
