@@ -33,6 +33,7 @@ export const libraryRouter = createTRPCRouter({
 
       const productsData = await ctx.db.find({
         collection: 'products',
+        depth: 2, //Populate tenant and image relationships
         pagination: false,
         where: {
           id: {
@@ -43,7 +44,7 @@ export const libraryRouter = createTRPCRouter({
 
 
       return {
-        ...productsData,
+        ...ordersData,
         docs: productsData.docs.map((doc) => ({
           ...doc,
           image: doc.image as Media || null,

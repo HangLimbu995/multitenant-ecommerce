@@ -33,7 +33,7 @@ export const ProductList = () => {
             {
                 (!data?.pages || data.pages.flatMap(page => page.docs).length === 0) ? (
                     <div className="text-center col-span-full py-10 text-gray-500">
-                        Didn&apos;t find any products with your filter.
+                        Your library is empty. Purchase products to see them here.
                     </div>
                 ) : (
                     <>

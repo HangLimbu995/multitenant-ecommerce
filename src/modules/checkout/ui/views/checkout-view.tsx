@@ -69,7 +69,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             clearCart();
             toast.info("Invalid products found, cart cleared")
         }
-    }, [error?.data?.code])
+    }, [error, clearCart])
 
     if (isLoading) {
         return <CheckoutViewSkeleton />
