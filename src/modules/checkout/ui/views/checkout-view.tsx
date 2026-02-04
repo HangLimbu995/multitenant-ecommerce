@@ -53,6 +53,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     }, [redirectUrl])
 
     useEffect(() => {
+        // localhost:3000/tenants/admin/checkout?success=true
         if (states.success) {
             setStates({ success: false, cancel: false })
             clearCart();
@@ -68,7 +69,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             clearCart();
             toast.info("Invalid products found, cart cleared")
         }
-    }, [error?.data?.code])
+    }, [error, clearCart])
 
     if (isLoading) {
         return <CheckoutViewSkeleton />

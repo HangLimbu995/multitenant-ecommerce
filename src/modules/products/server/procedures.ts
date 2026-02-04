@@ -7,6 +7,7 @@ import { Category, Media, Tenant } from '@/payload-types';
 import { sortValues } from '../search-params';
 import { DEFAULT_LIMIT } from '@/constants';
 import { TRPCError } from '@trpc/server';
+import { headers as getHeaders } from 'next/headers'
 
 
 type CategoryWithSubcategories = Category & {
@@ -23,11 +24,39 @@ export const productsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      const headers = await getHeaders();
+      const session = await ctx.db.auth({ headers })
+
       const product = await ctx.db.findByID({
         collection: 'products',
         id: input.id,
         depth: 2, // Load the "product.image", "product.teneant", & "product.tenant.image"
       })
+
+      let isPurchased = false;
+
+      if (session.user) {
+        const ordersData = await ctx.db.find({
+          collection: 'orders',
+          pagination: false,
+          limit: 1,
+          where: {
+            and: [
+              {
+                product: {
+                  equals: input.id,
+                }
+              }, {
+                user: {
+                  equals: session.user.id,
+                }
+              }
+            ]
+          }
+        })
+
+        isPurchased = !!ordersData.docs[0]
+      }
 
       if (!product)
         throw new TRPCError({
@@ -36,6 +65,7 @@ export const productsRouter = createTRPCRouter({
 
       return {
         ...product,
+        isPurchased,
         image: product.image as Media | null,
         tenant: product.tenant as Tenant & { image: Media | null },
       };
@@ -111,7 +141,7 @@ export const productsRouter = createTRPCRouter({
           const category = doc as CategoryWithSubcategories;
           return {
             ...doc,
-            subcategories: (category.subcategories?.docs ?? []).map((subDoc) => ({
+            subcategories: ((category.subcategories?.docs ?? []) as Category[]).map((subDoc) => ({
               // Becuase of "depth: 1" we are confident "doc" will be a type of "Cateogry"
               ...subDoc,
               subcategories: undefined,
