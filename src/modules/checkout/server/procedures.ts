@@ -97,14 +97,14 @@ export const checkoutRouter = createTRPCRouter({
         } as CheckoutMetadata
       })
 
-      if(!checkout) {
+      if (!checkout) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to create checkout"
         })
       }
 
-      return {url: checkout.url}
+      return { url: checkout.url }
     })
   ,
   getProducts: baseProcedure
