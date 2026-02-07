@@ -1,4 +1,4 @@
-import {  Link } from '@payloadcms/ui'
+import { Button, Link } from '@payloadcms/ui'
 
 export const StripeVerify = () => {
     return (

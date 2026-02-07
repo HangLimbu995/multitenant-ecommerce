@@ -12,6 +12,12 @@ export const Orders: CollectionConfig = {
     admin: {
         useAsTitle: 'name',
     },
+    indexes: [
+        {
+            fields: ['stripeCheckoutSessionId', 'product'],
+            unique: true,
+        },
+    ],
     fields: [
         {
             name: 'name',

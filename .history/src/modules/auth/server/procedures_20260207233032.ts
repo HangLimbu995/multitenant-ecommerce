@@ -40,16 +40,12 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      let account;
-      try {
-        account = await stripe.accounts.create({})
-      } catch (error) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Failed to create Stripe account",
-          cause: error,
-        })
-      }
+     let account;
+     try {
+      
+     } catch (error) {
+      
+     }
 
       const tenant = await ctx.db.create({
         collection: "tenants",

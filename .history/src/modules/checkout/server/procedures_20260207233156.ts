@@ -149,10 +149,9 @@ export const checkoutRouter = createTRPCRouter({
         })
       }
 
-      if (!tenant.stripeAccountId) {
+      if(!tenant.stripeAccountId) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Tenant does not have a Stripe account configured."
+          code: ""
         })
       }
 
