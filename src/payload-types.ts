@@ -260,15 +260,45 @@ export interface Tag {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".
  */
+
+// -----START: Orders Collection Types-----
 export interface Order {
   id: string;
   name: string;
   user: string | User;
   product: string | Product;
   stripeCheckoutSessionId: string;
+  stripeAccountId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
+// If the Orders collection in Orders.ts has custom fields or relationships,
+// add more types/interfaces here (example below):
+
+/**
+ * Example: Orders Status Enum
+ */
+export type OrderStatus =
+  | 'pending'
+  | 'processing'
+  | 'completed'
+  | 'cancelled';
+
+/**
+ * Example: Orders Payment Method Enum
+ */
+export type PaymentMethod =
+  | 'stripe'
+  | 'paypal'
+  | 'cash_on_delivery';
+
+export interface OrderWithStatus extends Order {
+  status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  // Add more custom fields from Orders.ts as needed
+}
+// -----END: Orders Collection Types-----
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "reviews".
@@ -492,6 +522,9 @@ export interface OrdersSelect<T extends boolean = true> {
   stripeCheckoutSessionId?: T;
   updatedAt?: T;
   createdAt?: T;
+  // If Orders.ts includes custom fields (e.g. status, paymentMethod), add them here:
+  status?: T;
+  paymentMethod?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

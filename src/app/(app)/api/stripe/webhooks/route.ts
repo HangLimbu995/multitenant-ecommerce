@@ -33,7 +33,8 @@ export async function POST(req: Request) {
     console.log("✅ Success:", event.id)
 
     const permittedEvents: string[] = [
-        "checkout.session.completed"
+        "checkout.session.completed",
+        "account.updated"
     ]
 
     const payload = await getPayload({ config })
@@ -45,65 +46,87 @@ export async function POST(req: Request) {
             switch (event.type) {
                 case "checkout.session.completed":
                     {
-                    data = event.data.object as Stripe.Checkout.Session;
+                        data = event.data.object as Stripe.Checkout.Session;
 
-                    if (!data.metadata?.userId) {
-                        throw new Error("User ID is required")
-                    }
+                        console.log("event.account", { account: event.account });
 
-                    const user = await payload.findByID({
-                        collection: 'users',
-                        id: data.metadata?.userId
-                    })
-
-                    if (!user) {
-                        throw new Error("User not found")
-                    }
-
-                    const expandedSession = await stripe.checkout.sessions.retrieve(data.id,
-                        {
-                            expand: ['line_items.data.price.product']
+                        if (!data.metadata?.userId) {
+                            throw new Error("User ID is required")
                         }
-                    )
 
-                    if (
-                        !expandedSession.line_items?.data ||
-                        !expandedSession.line_items.data.length
-                    ) {
-                        throw new Error("No line items found")
-                    }
+                        const user = await payload.findByID({
+                            collection: 'users',
+                            id: data.metadata?.userId
+                        })
 
-                    const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
+                        if (!user) {
+                            throw new Error("User not found")
+                        }
 
-                    for (const item of lineItems) {
-                        const existingOrder = await payload.find({
-                            collection: 'orders',
-                            where: {
-                                stripeCheckoutSessionId: {
-                                    equals: data.id
+                        const expandedSession = await stripe.checkout.sessions.retrieve(data.id,
+                            {
+                                expand: ['line_items.data.price.product']
+                            }, {
+                            stripeAccount: event.account
+                        }
+                        )
+
+                        if (
+                            !expandedSession.line_items?.data ||
+                            !expandedSession.line_items.data.length
+                        ) {
+                            throw new Error("No line items found")
+                        }
+
+                        const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
+
+                        for (const item of lineItems) {
+                            const existingOrder = await payload.find({
+                                collection: 'orders',
+                                where: {
+                                    stripeCheckoutSessionId: {
+                                        equals: data.id
+                                    },
+                                    product: { equals: item.price.product.metadata.id }
                                 },
-                                product: { equals: item.price.product.metadata.id }
-                            },
-                            limit: 1,
-                        })
+                                limit: 1,
+                            })
 
-                        if (existingOrder.docs.length > 0) {
-                            console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id}`)
-                            continue;
-                        }
-
-                        await payload.create({
-                            collection: "orders",
-                            data: {
-                                stripeCheckoutSessionId: data.id,
-                                user: user.id,
-                                product: item.price.product.metadata.id,
-                                name: item.price.product.name,
+                            if (existingOrder.docs.length > 0) {
+                                console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id}`)
+                                continue;
                             }
-                        })
+
+                            await payload.create({
+                                collection: "orders",
+                                data: {
+                                    stripeCheckoutSessionId: data.id,
+                                    stripeAccountId: event.account,
+                                    user: user.id,
+                                    product: item.price.product.metadata.id,
+                                    name: item.price.product.name,
+                                }
+                            })
                         }
                         break;
                     }
+
+                case "account.updated":
+                    data = event.data.object as Stripe.Account;
+
+                    await payload.update({
+                        collection: "tenants",
+                        where: {
+                            stripeAccountId: {
+                                equals: data.id,
+                            }
+                        },
+                        data: {
+                            stripeDetailsSubmitted: data.details_submitted
+                        }
+                    });
+
+                    break;
                 default:
                     throw new Error(`Unhandled event: ${event.type}`)
             }
