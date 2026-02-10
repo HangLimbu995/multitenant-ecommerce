@@ -8,7 +8,6 @@ import type Stripe from 'stripe';
 import { CheckoutMetadata, ProductMetadata } from '../types';
 import { stripe } from '@/lib/stripe';
 import { PLATFORM_FEE_PERCENTAGE } from '@/constants';
-import { generateTenantURL } from '@/lib/utils';
 
 
 export const checkoutRouter = createTRPCRouter({
@@ -183,7 +182,9 @@ export const checkoutRouter = createTRPCRouter({
 
       const platformFeeAmount = Math.round(totalAmount * (PLATFORM_FEE_PERCENTAGE / 100))
 
-      const domain = generateTenantURL(input.tenantSlug);
+      const  domain = gene;
+
+     
 
       const checkout = await stripe.checkout.sessions.create({
         customer_email: ctx.session.user.email,

@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function generateTenantURL(tenantSlug: string) {
   // In development mode, use normal routing
   if (process.env.NODE_ENV === "development") {
-    return `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenantSlug}`
+    return `/tenants/${tenantSlug}`
   }
 
   const protocol = 'https';
