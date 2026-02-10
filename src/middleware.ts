@@ -15,10 +15,8 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
     const url = req.nextUrl;
-    console.log('url is', url)
     // Extract the hostname (e.g., "hang.funroad.com" or "john.localhost:3000")
     const hostname = req.headers.get("host") || "";
-    console.log('hostname is', hostname)
 
     const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || '';
 

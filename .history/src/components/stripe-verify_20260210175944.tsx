@@ -1,5 +1,4 @@
 import {  Link } from '@payloadcms/ui'
-
 export const dynamic = 'force-dynamic'
 
 export const StripeVerify = () => {
