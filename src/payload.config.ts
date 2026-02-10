@@ -42,7 +42,25 @@ export default buildConfig({
     Products, Tags,
     Tenants, Orders,
     Reviews,],
-  editor: lexicalEditor(),
+  editor: lexicalEditor(
+    //   {
+    //   features: ({ defaultFeatures }) => [
+    //     ...defaultFeatures,
+    //     UploadFeature({
+    //       collections: {
+    //         media: {
+    //           fields: [
+    //             {
+    //               name: 'name',
+    //               type: 'text',
+    //             }
+    //           ]
+    //         }
+    //       }
+    //     })
+    //   ]
+    // }
+  ),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
@@ -55,7 +73,7 @@ export default buildConfig({
     payloadCloudPlugin(),
     multiTenantPlugin<Config>({
       collections: {
-        products: {}
+        products: {},
       },
       tenantsArrayField: {
         includeDefaultField: false,
