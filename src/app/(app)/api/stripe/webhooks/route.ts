@@ -6,6 +6,17 @@ import { NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { ExpandedLineItem } from '@/modules/checkout/types'
 
+/** MongoDB duplicate key error code; used when a unique index is violated. */
+const MONGODB_DUPLICATE_KEY_CODE = 11000
+
+function isDuplicateKeyError(err: unknown): boolean {
+    const e = err as { code?: number; cause?: unknown; message?: string }
+    if (e?.code === MONGODB_DUPLICATE_KEY_CODE || e?.code === 11001) return true
+    if (typeof e?.message === 'string' && (e.message.includes('duplicate key') || e.message.includes('E11000'))) return true
+    const cause = e?.cause as { code?: number; message?: string } | undefined
+    return cause?.code === MONGODB_DUPLICATE_KEY_CODE || (typeof cause?.message === 'string' && cause.message.includes('duplicate key')) || false
+}
+
 export async function POST(req: Request) {
     let event: Stripe.Event;
 
@@ -48,7 +59,9 @@ export async function POST(req: Request) {
                     {
                         data = event.data.object as Stripe.Checkout.Session;
 
-                        console.log("event.account", { account: event.account });
+                        if (!event.account) {
+                            throw new Error("Missing connected account on checkout event")
+                        }
 
                         if (!data.metadata?.userId) {
                             throw new Error("User ID is required")
@@ -97,16 +110,24 @@ export async function POST(req: Request) {
                                 continue;
                             }
 
-                            await payload.create({
-                                collection: "orders",
-                                data: {
-                                    stripeCheckoutSessionId: data.id,
-                                    stripeAccountId: event.account,
-                                    user: user.id,
-                                    product: item.price.product.metadata.id,
-                                    name: item.price.product.name,
+                            try {
+                                await payload.create({
+                                    collection: "orders",
+                                    data: {
+                                        stripeCheckoutSessionId: data.id,
+                                        stripeAccountId: event.account,
+                                        user: user.id,
+                                        product: item.price.product.metadata.id,
+                                        name: item.price.product.name,
+                                    }
+                                })
+                            } catch (createError: unknown) {
+                                if (isDuplicateKeyError(createError)) {
+                                    console.log(`Order already exists for session ${data.id}, product ${item.price.product.metadata.id} (unique constraint)`)
+                                    continue
                                 }
-                            })
+                                throw createError
+                            }
                         }
                         break;
                     }

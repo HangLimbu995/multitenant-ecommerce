@@ -36,11 +36,6 @@ export const productsRouter = createTRPCRouter({
         }
       })
 
-      if (!product)
-        throw new TRPCError({
-          code: 'NOT_FOUND', message: 'Product not found'
-        })
-
       if (product.isArchived) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -73,7 +68,10 @@ export const productsRouter = createTRPCRouter({
         isPurchased = !!ordersData.docs[0]
       }
 
-
+      if (!product)
+        throw new TRPCError({
+          code: 'NOT_FOUND', message: 'Product not found'
+        })
 
       const reviews = await ctx.db.find({
         collection: 'reviews',
@@ -180,7 +178,7 @@ export const productsRouter = createTRPCRouter({
         }
       } else {
         // If we are loading products for public storefront (no tenantSlug)
-        // Make sure to not load products set to "isPrivate: true" (using reverse not_equals logic)
+        // Make sure to not load products set to "isPrivate: true" (using reveerse not_equals logic)
         // These products are exclusively private to the tenant store
         where["isPrivate"] = {
           not_equals: true,

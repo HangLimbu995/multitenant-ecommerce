@@ -143,3 +143,24 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         </Form>
     )
 }
+
+export const ReviewFormSkeleton = () => {
+    return(
+        <form className="flex flex-col gap-y-4 animate-pulse">
+            <div className="h-6 w-52 bg-muted rounded mb-2" />
+            <div className="flex items-center">
+                <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i} className="w-6 h-6 bg-muted rounded-full" />
+                    ))}
+                </div>
+            </div>
+            <div className="flex flex-col gap-2">
+                <div className="h-32 w-full bg-muted rounded" />
+            </div>
+            <div className="flex mt-2">
+                <div className="h-10 w-36 bg-muted rounded" />
+            </div>
+        </form>
+    )
+}

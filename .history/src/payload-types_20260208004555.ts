@@ -243,7 +243,6 @@ export interface Product {
   refundPolicy?: ('30-day' | '14-day' | '7-day' | '3-day' | '1-day' | 'no-refunds') | null;
   content?: string | null;
   isArchived?: boolean | null;
-  isPrivate?: boolean | null; // <--- added isPrivate field for product collection
   updatedAt: string;
   createdAt: string;
 }
@@ -464,7 +463,6 @@ export interface ProductsSelect<T extends boolean = true> {
   refundPolicy?: T;
   content?: T;
   isArchived?: T;
-  isPrivate?: T; // <--- added isPrivate field for select type
   updatedAt?: T;
   createdAt?: T;
 }

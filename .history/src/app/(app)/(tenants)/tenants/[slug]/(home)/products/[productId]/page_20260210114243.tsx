@@ -18,7 +18,7 @@ const Page = async ({ params }: Props) => {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <Suspense fallback={<ProductViewSkeleton />}>
+            <Suspense fallback={<ProudctViewSkeleton />}>
                 <ProductView productId={productId} tenantSlug={slug} />
             </Suspense>
         </HydrationBoundary>
