@@ -27,10 +27,13 @@ export const categoriesRouter = createTRPCRouter({
       const category = doc as CategoryWithSubcategories;
       return {
         ...doc,
-        subcategories: (category.subcategories?.docs ?? []).map((subDoc) => ({
-          // Becuase of "depth: 1" we are confident "doc" will be a type of "Cateogry"
-          ...subDoc,
-        })),
+        subcategories: (category.subcategories?.docs ?? [])
+          // Narrow out string IDs so we only work with full Category objects
+          .filter((subDoc): subDoc is Category => typeof subDoc !== "string")
+          .map((subDoc) => ({
+            // Becuase of "depth: 1" we are confident "doc" will be a type of "Cateogry"
+            ...subDoc,
+          })),
       };
     });
 

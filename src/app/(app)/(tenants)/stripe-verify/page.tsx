@@ -11,11 +11,9 @@ const Page = () => {
     const trpc = useTRPC();
     const { mutate: verify } = useMutation(trpc.checkout.verify.mutationOptions({
         onSuccess: (data) => {
-            console.log('data',data.url)
             setRedirectUrl(data.url)
         },
         onError: (error) => {
-            console.log('error',error)
             setRedirectUrl('/')
         }
     }))
