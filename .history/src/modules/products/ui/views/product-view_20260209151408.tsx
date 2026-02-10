@@ -176,7 +176,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     )
 }
 
-export const ProductViewSkeleton = () => {
+export const ProudctViewSkeleton = () => {
     return (
         <div className="px-4 lg:px-12 py-10">
             <div className="border rounded-sm bg-white overflow-hidden ">

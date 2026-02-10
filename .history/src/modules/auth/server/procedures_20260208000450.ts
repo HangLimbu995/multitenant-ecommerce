@@ -45,7 +45,7 @@ export const authRouter = createTRPCRouter({
         account = await stripe.accounts.create({})
       } catch (error) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
+          code: "BAD_REQUEST",
           message: "Failed to create Stripe account",
           cause: error,
         })

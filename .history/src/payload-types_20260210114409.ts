@@ -464,7 +464,6 @@ export interface ProductsSelect<T extends boolean = true> {
   refundPolicy?: T;
   content?: T;
   isArchived?: T;
-  isPrivate?: T; // <--- added isPrivate field for select type
   updatedAt?: T;
   createdAt?: T;
 }

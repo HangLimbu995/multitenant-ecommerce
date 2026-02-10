@@ -1,4 +1,4 @@
-import { ProductView, ProductViewSkeleton } from "@/modules/products/ui/views/product-view";
+import { ProductView, ProudctViewSkeleton } from "@/modules/products/ui/views/product-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
@@ -18,7 +18,7 @@ const Page = async ({ params }: Props) => {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <Suspense fallback={<ProductViewSkeleton />}>
+            <Suspense fallback={<ProudctViewSkeleton />}>
                 <ProductView productId={productId} tenantSlug={slug} />
             </Suspense>
         </HydrationBoundary>
