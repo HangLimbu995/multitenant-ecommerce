@@ -9,7 +9,7 @@ export function generateTenantURL(tenantSlug: string) {
   const isDevelopment = process.env.NODE_ENV === 'development';
   const isSubdomainRoutingEnabled = Boolean(process.env.NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING!);
 
-  // In development or subdomain routing disabled mode, use normal routing
+  // In development mode, use normal routing
   if (isDevelopment || !isSubdomainRoutingEnabled) {
     return `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenantSlug}`
   }
