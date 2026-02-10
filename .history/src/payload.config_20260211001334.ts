@@ -85,8 +85,7 @@ export default buildConfig({
       enabled: true,
       collections: {
         media: true,
-      },
-      token: process.env.BLOB_READ_WHITE_TOKEN,
-    }),
+      }
+    })
   ],
 });
