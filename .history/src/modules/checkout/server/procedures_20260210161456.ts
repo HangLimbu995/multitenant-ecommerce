@@ -185,6 +185,8 @@ export const checkoutRouter = createTRPCRouter({
 
       const domain = generateTenantURL(input.tenantSlug);
 
+
+
       const checkout = await stripe.checkout.sessions.create({
         customer_email: ctx.session.user.email,
         success_url: `${domain}/checkout?success=true`,

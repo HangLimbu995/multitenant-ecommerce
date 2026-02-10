@@ -6,16 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function generateTenantURL(tenantSlug: string) {
-  // In development mode, use normal routing
   if (process.env.NODE_ENV === "development") {
-    return `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenantSlug}`
+    return `/tenants/${tenantSlug}`
   }
 
   const protocol = 'https';
   const domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
 
-  // In production, use subdomain routing
-  return `${protocol}://${tenantSlug}.${domain}`
+  return `${protocol}:`
 }
 
 export function formatCurrency(value: number | string) {
@@ -24,4 +22,4 @@ export function formatCurrency(value: number | string) {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(Number(value))
-} 
+}

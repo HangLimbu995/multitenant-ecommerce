@@ -14,8 +14,8 @@ export const Footer = () => {
         <div className="flex items-center space-x-2">
           <span className="text-gray-500">Powered by</span>
         </div>
-        <Link href={process.env.NEXT_PUBLIC_APP_URL!}
-          className="group transition">
+        <Link href={process.env.NEXT_PUBLIC_APP_URL}
+         className="group transition">
           <span
             className={cn(
               "text-2xl font-semibold tracking-wide group-hover:text-primary transition-colors duration-200",

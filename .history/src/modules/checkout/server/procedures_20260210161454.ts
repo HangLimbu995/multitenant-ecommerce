@@ -183,7 +183,9 @@ export const checkoutRouter = createTRPCRouter({
 
       const platformFeeAmount = Math.round(totalAmount * (PLATFORM_FEE_PERCENTAGE / 100))
 
-      const domain = generateTenantURL(input.tenantSlug);
+      const domain = generateTenantURL(input.);
+
+
 
       const checkout = await stripe.checkout.sessions.create({
         customer_email: ctx.session.user.email,
