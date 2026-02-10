@@ -87,6 +87,6 @@ export default buildConfig({
         media: true,
       },
       token: process.env.BLOB_READ_WHITE_TOKEN,
-    }),
+    })
   ],
 });
