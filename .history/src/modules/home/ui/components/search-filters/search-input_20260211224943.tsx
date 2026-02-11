@@ -27,11 +27,9 @@ export const SearchInput = ({ disabled }: Props) => {
   const session = useQuery(trpc.auth.session.queryOptions());
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutid = setTimeout(() => {
       setFilters({ search: searchValue })
     }, 500)
-
-    return () => clearTimeout(timeoutId);
   }, [searchValue, setFilters])
 
   return (
@@ -44,8 +42,8 @@ export const SearchInput = ({ disabled }: Props) => {
           placeholder="Search for products..."
           disabled={disabled}
           aria-label="Search products"
-          value={searchValue || ''}
-          onChange={e => setSearchValue(e.target.value)}
+          value={}
+          onChange={e => setFilters({ search: e.target.value })}
         />
       </div>
       {/* TODO: Add categories view all button */}

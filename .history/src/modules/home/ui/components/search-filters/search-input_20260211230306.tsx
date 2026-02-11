@@ -27,11 +27,11 @@ export const SearchInput = ({ disabled }: Props) => {
   const session = useQuery(trpc.auth.session.queryOptions());
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutid = setTimeout(() => {
       setFilters({ search: searchValue })
     }, 500)
 
-    return () => clearTimeout(timeoutId);
+    return () => clearTimeout(time);
   }, [searchValue, setFilters])
 
   return (

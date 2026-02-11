@@ -3,10 +3,10 @@ import { createLoader, parseAsString, parseAsArrayOf, parseAsStringLiteral } fro
 export const sortValues = ['curated', 'trending', 'hot_and_new'] as const
 
 const params = {
-    search: parseAsString
-        .withOptions({
-            clearOnDefault: true,
-        }),
+    search: parseAsString()
+    .withOptions({
+        clearOnDeafult: true,
+    })
     sort: parseAsStringLiteral(sortValues).withDefault('curated'),
     minPrice: parseAsString
         .withOptions({

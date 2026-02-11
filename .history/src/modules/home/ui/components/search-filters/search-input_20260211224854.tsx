@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,13 +26,7 @@ export const SearchInput = ({ disabled }: Props) => {
   const trpc = useTRPC();
   const session = useQuery(trpc.auth.session.queryOptions());
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setFilters({ search: searchValue })
-    }, 500)
-
-    return () => clearTimeout(timeoutId);
-  }, [searchValue, setFilters])
+  
 
   return (
     <div className="flex items-center w-full px-2 sm:px-0 max-w-xl mx-auto">
@@ -44,8 +38,8 @@ export const SearchInput = ({ disabled }: Props) => {
           placeholder="Search for products..."
           disabled={disabled}
           aria-label="Search products"
-          value={searchValue || ''}
-          onChange={e => setSearchValue(e.target.value)}
+          value={filters.search || ''}
+          onChange={e => setFilters({search: e.target.value})}
         />
       </div>
       {/* TODO: Add categories view all button */}

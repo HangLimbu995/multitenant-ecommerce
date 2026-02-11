@@ -40,7 +40,7 @@ export const Users: CollectionConfig = {
         sameSite: 'None',
         domain: process.env.NEXT_PUBLIC_ROOT_DOMAIN,
         secure: true,
-      })
+      ))
     }
   },
   fields: [

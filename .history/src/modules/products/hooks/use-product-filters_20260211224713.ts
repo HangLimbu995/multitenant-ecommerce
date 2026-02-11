@@ -20,5 +20,8 @@ export const params = {
 }
 
 export const useProductFilters = () => {
-    return useQueryStates(params)
+    return useQueryStates(params, {
+        shallow: true,
+        throttleMs: 500,
+    })
 }

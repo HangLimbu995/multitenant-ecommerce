@@ -36,11 +36,11 @@ export const Users: CollectionConfig = {
   },
   auth: {
     cookies: {
-      ...(process.env.NODE_ENV !== 'development' && {
+      ...(process.env.NODE_ENV !== 'development' && (
         sameSite: 'None',
         domain: process.env.NEXT_PUBLIC_ROOT_DOMAIN,
         secure: true,
-      })
+      )}
     }
   },
   fields: [
