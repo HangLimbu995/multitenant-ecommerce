@@ -14,7 +14,7 @@ interface CartState {
 }
 
 export const useCartStore = create<CartState>()(
-    persist((set, get) => ({
+    persist((set) => ({
         tenantCarts: {},
         addProduct: (tenantSlug, productId) =>
             set((state) => {
