@@ -27,11 +27,9 @@ export const SearchInput = ({ disabled }: Props) => {
   const session = useQuery(trpc.auth.session.queryOptions());
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutid = setTimeout(() => {
       setFilters({ search: searchValue })
     }, 500)
-
-    return () => clearTimeout(timeoutId);
   }, [searchValue, setFilters])
 
   return (
@@ -44,7 +42,7 @@ export const SearchInput = ({ disabled }: Props) => {
           placeholder="Search for products..."
           disabled={disabled}
           aria-label="Search products"
-          value={searchValue || ''}
+          value={}
           onChange={e => setSearchValue(e.target.value)}
         />
       </div>

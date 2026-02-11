@@ -234,11 +234,7 @@ export const productsRouter = createTRPCRouter({
         }
       }
 
-      if (input.search) {
-        where['name'] = {
-          like: input.search
-        }
-      }
+      
 
 
       const data = await ctx.db.find({
