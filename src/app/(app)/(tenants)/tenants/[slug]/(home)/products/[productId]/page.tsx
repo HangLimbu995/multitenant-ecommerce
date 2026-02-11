@@ -22,6 +22,7 @@ const Page = async ({ params }: Props) => {
                 <ProductView productId={productId} tenantSlug={slug} />
             </Suspense>
         </HydrationBoundary>
+
     )
 }
 
